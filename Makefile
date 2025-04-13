@@ -1,4 +1,4 @@
-.PHONY: run-backend run-frontend run lint lint-fix clean install install-backend install-frontend
+.PHONY: run-backend run-frontend run stop lint lint-fix clean install install-backend install-frontend
 
 # Default Python interpreter
 PYTHON = uv run python
@@ -44,4 +44,10 @@ clean:
 	rm -rf .ruff_cache
 	rm -rf frontend/.next
 
+# Stop running servers
+stop:
+	@echo "Stopping any running frontend and backend servers..."
+	-lsof -ti :3000 | xargs kill -9 2>/dev/null || true
+	-lsof -ti :8081 | xargs kill -9 2>/dev/null || true
+	@echo "Servers stopped successfully."
 

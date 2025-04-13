@@ -63,12 +63,17 @@ This project includes a Makefile to simplify common development tasks:
    ```
    The application will be available at http://localhost:3000
 
-4. Run linting checks:
+4. Stop the backend and frontend servers:
+   ```bash
+   make stop
+   ```
+
+5. Run linting checks:
    ```bash
    make lint
    ```
 
-5. Fix lint errors automatically:
+6. Fix lint errors automatically:
    ```bash
    make lint-fix
    ```
