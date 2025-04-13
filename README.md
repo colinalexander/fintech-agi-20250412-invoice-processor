@@ -1,7 +1,7 @@
 # AI Invoice Parser - Hackathon Prototype
 
 ## Overview
-A lightweight AI-powered web app that automates the extraction of structured, machine-readable data from PDF/PNG/JPG invoices. Built as a [Ramp](https://ramp.com/)-style prototype for the AI x Fintech Build Day hackathon. Features intelligent confidence scoring and visual highlighting of potentially incorrect data.
+A lightweight AI-powered web app that automates the extraction of structured, machine-readable data from PDF/PNG/JPG invoices. Built as a [Ramp](https://ramp.com/)-style prototype for the [AI x Fintech Build Day hackathon](https://app.agihouse.org/events/ai-fintech-20250412). Features intelligent confidence scoring and visual highlighting of potentially incorrect data.
 
 Let the AI do the paperwork. You focus on the real work!
 
