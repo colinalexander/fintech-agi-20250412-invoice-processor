@@ -14,6 +14,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onUploadSuccess, onUploadError 
   const [uploadProgress, setUploadProgress] = useState(0);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [processingStatus, setProcessingStatus] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
@@ -35,44 +36,63 @@ const FileUpload: React.FC<FileUploadProps> = ({ onUploadSuccess, onUploadError 
   const handleUpload = async () => {
     if (!selectedFile) return;
 
+    // Prevent duplicate uploads
+    if (isUploading) {
+      console.log('Upload already in progress');
+      return;
+    }
+
     setIsUploading(true);
     setUploadProgress(10);
+    setError(null);
+    
+    // Add a timeout to handle stalled uploads
+    const uploadTimeout = setTimeout(() => {
+      if (isUploading) {
+        console.log('Upload timed out');
+        setError('Upload timed out. The server may be busy processing your request. Please try again.');
+        setIsUploading(false);
+        setProcessingStatus('Upload timed out');
+      }
+    }, 180000); // 3 minute timeout
+
     try {
       console.log('Starting file upload process...');
       const formData = new FormData();
       formData.append('file', selectedFile);
       console.log(`File appended to form data: ${selectedFile.name} (${selectedFile.type}, ${selectedFile.size} bytes)`);
 
-      // Simulate progress with detailed status updates
+      // Create a more predictable progress simulation
+      let progressStage = 0;
+      const progressStages = [
+        { value: 20, message: 'Uploading invoice...', time: 1000 },
+        { value: 40, message: 'Processing invoice...', time: 2000 },
+        { value: 60, message: 'Analyzing document...', time: 3000 },
+        { value: 80, message: 'Extracting data...', time: 2000 },
+        { value: 90, message: 'Formatting results...', time: 2000 }
+      ];
       
-      // Simulate progress updates while waiting for API
       const progressInterval = setInterval(() => {
-        setUploadProgress((prev) => {
-          // Cap at 90% until we get actual completion
-          const newProgress = Math.floor(prev + Math.random() * 5);
-          return newProgress > 90 ? 90 : newProgress;
-        });
-        
-        // Update processing status based on progress
-        if (uploadProgress < 30) {
-          setProcessingStatus('Uploading invoice...');
-        } else if (uploadProgress < 60) {
-          setProcessingStatus('Processing invoice...');
-        } else if (uploadProgress < 90) {
-          setProcessingStatus('Formatting extracted data...');
+        if (progressStage < progressStages.length) {
+          const stage = progressStages[progressStage];
+          setUploadProgress(stage.value);
+          setProcessingStatus(stage.message);
+          progressStage++;
         } else {
           clearInterval(progressInterval);
         }
-      }, 800);
+      }, 2000);
 
       console.log('Calling uploadInvoice API...');
       const response = await uploadInvoice(selectedFile);
       console.log('API response received:', response);
       
+      // Clear the timeout since upload completed
+      clearTimeout(uploadTimeout);
+      
       clearInterval(progressInterval);
       
       if (response.success && response.data && response.invoice_id) {
-        setUploadProgress(100);
         setProcessingStatus('Processing complete! Displaying results...');
         
         // Check if the response contains an error message despite success flag

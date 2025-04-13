@@ -102,7 +102,17 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     name="invoice_number"
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
-                  />
+                  >
+                    {({ field }: any) => (
+                      <input
+                        {...field}
+                        type="text"
+                        id="invoice_number"
+                        value={field.value || ''}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                      />
+                    )}
+                  </Field>
                   <ErrorMessage name="invoice_number" component="div" className="mt-1 text-sm text-red-600" />
                 </div>
 
@@ -115,7 +125,17 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     name="invoice_date"
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
-                  />
+                  >
+                    {({ field }: any) => (
+                      <input
+                        {...field}
+                        type="text"
+                        id="invoice_date"
+                        value={field.value || ''}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                      />
+                    )}
+                  </Field>
                   <ErrorMessage name="invoice_date" component="div" className="mt-1 text-sm text-red-600" />
                 </div>
 
@@ -128,7 +148,17 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     name="due_date"
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
-                  />
+                  >
+                    {({ field }: any) => (
+                      <input
+                        {...field}
+                        type="text"
+                        id="due_date"
+                        value={field.value || ''}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                      />
+                    )}
+                  </Field>
                   <ErrorMessage name="due_date" component="div" className="mt-1 text-sm text-red-600" />
                 </div>
 
@@ -141,7 +171,17 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     name="purchase_order_number"
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
-                  />
+                  >
+                    {({ field }: any) => (
+                      <input
+                        {...field}
+                        type="text"
+                        id="purchase_order_number"
+                        value={field.value || ''}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                      />
+                    )}
+                  </Field>
                 </div>
 
                 <div>
@@ -153,7 +193,17 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     name="currency"
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
-                  />
+                  >
+                    {({ field }: any) => (
+                      <input
+                        {...field}
+                        type="text"
+                        id="currency"
+                        value={field.value || ''}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                      />
+                    )}
+                  </Field>
                 </div>
               </div>
 
@@ -170,7 +220,18 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     type="number"
                     step="0.01"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
-                  />
+                  >
+                    {({ field }: any) => (
+                      <input
+                        {...field}
+                        type="number"
+                        step="0.01"
+                        id="subtotal"
+                        value={field.value || ''}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                      />
+                    )}
+                  </Field>
                   <ErrorMessage name="subtotal" component="div" className="mt-1 text-sm text-red-600" />
                 </div>
 
@@ -184,7 +245,18 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     type="number"
                     step="0.01"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
-                  />
+                  >
+                    {({ field }: any) => (
+                      <input
+                        {...field}
+                        type="number"
+                        step="0.01"
+                        id="tax"
+                        value={field.value || ''}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                      />
+                    )}
+                  </Field>
                   <ErrorMessage name="tax" component="div" className="mt-1 text-sm text-red-600" />
                 </div>
 
@@ -198,7 +270,18 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     type="number"
                     step="0.01"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
-                  />
+                  >
+                    {({ field }: any) => (
+                      <input
+                        {...field}
+                        type="number"
+                        step="0.01"
+                        id="shipping"
+                        value={field.value || ''}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                      />
+                    )}
+                  </Field>
                   <ErrorMessage name="shipping" component="div" className="mt-1 text-sm text-red-600" />
                 </div>
 
@@ -212,7 +295,18 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     type="number"
                     step="0.01"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
-                  />
+                  >
+                    {({ field }: any) => (
+                      <input
+                        {...field}
+                        type="number"
+                        step="0.01"
+                        id="total"
+                        value={field.value || ''}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                      />
+                    )}
+                  </Field>
                   <ErrorMessage name="total" component="div" className="mt-1 text-sm text-red-600" />
                 </div>
 
@@ -226,7 +320,18 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     type="number"
                     step="0.01"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
-                  />
+                  >
+                    {({ field }: any) => (
+                      <input
+                        {...field}
+                        type="number"
+                        step="0.01"
+                        id="amount_due"
+                        value={field.value || ''}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                      />
+                    )}
+                  </Field>
                   <ErrorMessage name="amount_due" component="div" className="mt-1 text-sm text-red-600" />
                 </div>
               </div>
@@ -246,7 +351,17 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     name="vendor.name"
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
-                  />
+                  >
+                    {({ field }: any) => (
+                      <input
+                        {...field}
+                        type="text"
+                        id="vendor.name"
+                        value={field.value || ''}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                      />
+                    )}
+                  </Field>
                 </div>
 
                 <div>

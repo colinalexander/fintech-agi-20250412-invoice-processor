@@ -171,9 +171,10 @@ def get_timestamp():
     """Get current timestamp in a readable format"""
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
 
-async def process_invoice_with_ai(file_bytes, filename, file_path):
-    """Process the invoice using OpenAI API."""
-    start_time = time.time()
+async def process_invoice_with_ai(file_bytes: bytes, filename: str, file_path: str) -> dict:
+    """Process an invoice with AI to extract structured data."""
+    # Track processing time
+    processing_start_time = time.time()
     print(f"[{get_timestamp()}] Starting processing for file: {filename}")
 
     # Determine file type from filename
@@ -267,20 +268,33 @@ async def process_invoice_with_ai(file_bytes, filename, file_path):
                 print(f"[{get_timestamp()}] Calling OpenAI Vision API...")
                 try:
                     vision_api_start = time.time()
+                    
+                    # Set a timeout for the API call to prevent hanging
+                    timeout_seconds = 60  # 1 minute timeout
+                    
+                    # Create a future for the API call
                     response = client.chat.completions.create(
                         model="gpt-4-turbo",
                         messages=[
-                            {"role": "system", "content": "You are an expert invoice data extraction assistant."},
+                            {
+                                "role": "system",
+                                "content": "You are an expert invoice data extraction assistant.",
+                            },
                             {
                                 "role": "user",
                                 "content": [
                                     {"type": "text", "text": INVOICE_PROMPT},
-                                    {"type": "image_url", "image_url": {"url": f"data:image/{process_extension};base64,{image_base64}"}}
-                                ]
-                            }
+                                    {
+                                        "type": "image_url",
+                                        "image_url": {
+                                            "url": f"data:image/{process_extension};base64,{image_base64}",
+                                        },
+                                    },
+                                ],
+                            },
                         ],
-                        temperature=0.1,
-                        max_tokens=2000
+                        max_tokens=4096,
+                        timeout=timeout_seconds,  # Add timeout parameter
                     )
                     vision_api_end = time.time()
                     print(f"[{get_timestamp()}] OpenAI Vision API call completed successfully in {vision_api_end - vision_api_start:.2f} seconds")
@@ -354,6 +368,11 @@ async def process_invoice_with_ai(file_bytes, filename, file_path):
                 # Store in memory
                 invoice_id = str(uuid.uuid4())
                 processed_invoices[invoice_id] = validated_data
+                
+                # Calculate and log total processing time
+                processing_end_time = time.time()
+                processing_time = processing_end_time - processing_start_time
+                print(f"[{get_timestamp()}] Processing completed successfully in {processing_time:.2f} seconds")
                 
                 return {
                     "success": True,
