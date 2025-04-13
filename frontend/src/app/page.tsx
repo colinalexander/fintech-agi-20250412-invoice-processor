@@ -58,7 +58,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <main className="max-w-full mx-auto py-4 px-2">
         {/* Progress Steps */}
         <div className="px-4 sm:px-0 mb-8">
           <div className="border-b border-gray-200 pb-5">
@@ -230,6 +230,68 @@ export default function Home() {
                           <div className="relative h-full w-full bg-gray-100 overflow-hidden">
                             {/* Control panel */}
                             <div className="absolute top-2 right-2 z-10 flex bg-white rounded-md shadow-md">
+                              {/* Rotation controls */}
+                              <button 
+                                onClick={() => {
+                                  const img = document.getElementById('invoice-image') as HTMLImageElement;
+                                  if (img) {
+                                    // Get current transform values
+                                    const style = window.getComputedStyle(img);
+                                    const matrix = new DOMMatrix(style.transform);
+                                    
+                                    // Extract current rotation angle (if any)
+                                    let currentRotation = 0;
+                                    const transformValue = img.style.transform;
+                                    const rotateMatch = transformValue.match(/rotate\(([-0-9]+)deg\)/);
+                                    if (rotateMatch && rotateMatch[1]) {
+                                      currentRotation = parseInt(rotateMatch[1], 10);
+                                    }
+                                    
+                                    // Calculate new rotation (counter-clockwise)
+                                    const newRotation = ((currentRotation - 90) % 360);
+                                    
+                                    // Apply rotation while preserving other transforms
+                                    img.style.transform = `translate(${matrix.e}px, ${matrix.f}px) scale(${matrix.a}) rotate(${newRotation}deg)`;
+                                  }
+                                }}
+                                className="p-2 text-gray-700 hover:bg-gray-100"
+                                title="Rotate Counter-Clockwise"
+                              >
+                                ↺
+                              </button>
+                              <button 
+                                onClick={() => {
+                                  const img = document.getElementById('invoice-image') as HTMLImageElement;
+                                  if (img) {
+                                    // Get current transform values
+                                    const style = window.getComputedStyle(img);
+                                    const matrix = new DOMMatrix(style.transform);
+                                    
+                                    // Extract current rotation angle (if any)
+                                    let currentRotation = 0;
+                                    const transformValue = img.style.transform;
+                                    const rotateMatch = transformValue.match(/rotate\(([-0-9]+)deg\)/);
+                                    if (rotateMatch && rotateMatch[1]) {
+                                      currentRotation = parseInt(rotateMatch[1], 10);
+                                    }
+                                    
+                                    // Calculate new rotation (clockwise)
+                                    const newRotation = ((currentRotation + 90) % 360);
+                                    
+                                    // Apply rotation while preserving other transforms
+                                    img.style.transform = `translate(${matrix.e}px, ${matrix.f}px) scale(${matrix.a}) rotate(${newRotation}deg)`;
+                                  }
+                                }}
+                                className="p-2 text-gray-700 hover:bg-gray-100"
+                                title="Rotate Clockwise"
+                              >
+                                ↻
+                              </button>
+                              
+                              {/* Separator */}
+                              <div className="border-l border-gray-200 mx-1"></div>
+                              
+                              {/* Zoom controls */}
                               <button 
                                 onClick={() => {
                                   const container = document.getElementById('image-container') as HTMLDivElement;
@@ -240,8 +302,16 @@ export default function Home() {
                                     const matrix = new DOMMatrix(style.transform);
                                     const scale = Math.max(matrix.a - 0.2, 0.5); // a is the x-scale
                                     
-                                    // Apply new scale while preserving translation
-                                    img.style.transform = `translate(${matrix.e}px, ${matrix.f}px) scale(${scale})`;
+                                    // Extract current rotation angle (if any)
+                                    let currentRotation = 0;
+                                    const transformValue = img.style.transform;
+                                    const rotateMatch = transformValue.match(/rotate\(([-0-9]+)deg\)/);
+                                    if (rotateMatch && rotateMatch[1]) {
+                                      currentRotation = parseInt(rotateMatch[1], 10);
+                                    }
+                                    
+                                    // Apply new scale while preserving translation and rotation
+                                    img.style.transform = `translate(${matrix.e}px, ${matrix.f}px) scale(${scale}) rotate(${currentRotation}deg)`;
                                   }
                                 }}
                                 className="p-2 text-gray-700 hover:bg-gray-100"
@@ -253,14 +323,14 @@ export default function Home() {
                                 onClick={() => {
                                   const img = document.getElementById('invoice-image') as HTMLImageElement;
                                   if (img) {
-                                    // Reset both zoom and position
-                                    img.style.transform = 'translate(0px, 0px) scale(1)';
+                                    // Reset zoom and position but keep rotation if any
+                                    img.style.transform = 'translate(0px, 0px) scale(1) rotate(0deg)';
                                   }
                                 }}
                                 className="p-2 text-gray-700 hover:bg-gray-100"
                                 title="Reset View"
                               >
-                                ↺
+                                ⟲
                               </button>
                               <button 
                                 onClick={() => {
@@ -272,8 +342,16 @@ export default function Home() {
                                     const matrix = new DOMMatrix(style.transform);
                                     const scale = Math.min(matrix.a + 0.2, 3); // a is the x-scale
                                     
-                                    // Apply new scale while preserving translation
-                                    img.style.transform = `translate(${matrix.e}px, ${matrix.f}px) scale(${scale})`;
+                                    // Extract current rotation angle (if any)
+                                    let currentRotation = 0;
+                                    const transformValue = img.style.transform;
+                                    const rotateMatch = transformValue.match(/rotate\(([-0-9]+)deg\)/);
+                                    if (rotateMatch && rotateMatch[1]) {
+                                      currentRotation = parseInt(rotateMatch[1], 10);
+                                    }
+                                    
+                                    // Apply new scale while preserving translation and rotation
+                                    img.style.transform = `translate(${matrix.e}px, ${matrix.f}px) scale(${scale}) rotate(${currentRotation}deg)`;
                                   }
                                 }}
                                 className="p-2 text-gray-700 hover:bg-gray-100"
@@ -285,7 +363,7 @@ export default function Home() {
                             
                             {/* Instructions tooltip */}
                             <div className="absolute bottom-2 left-2 z-10 bg-white bg-opacity-80 text-xs text-gray-700 p-2 rounded-md shadow-sm">
-                              Drag to move image • Scroll to zoom
+                              Drag to move image • Scroll to zoom • Use ↺/↻ to rotate
                             </div>
                             
                             {/* Image container with pan/zoom functionality */}
@@ -354,7 +432,7 @@ export default function Home() {
                                 src={`http://localhost:8081${filePath}`} 
                                 alt="Invoice Image" 
                                 className="max-h-full max-w-full object-contain transition-transform duration-100"
-                                style={{ transformOrigin: 'center', transform: 'translate(0px, 0px) scale(1)' }}
+                                style={{ transformOrigin: 'center', transform: 'translate(0px, 0px) scale(1) rotate(0deg)' }}
                                 onError={(e) => {
                                   e.currentTarget.onerror = null;
                                   console.error('Failed to load image');

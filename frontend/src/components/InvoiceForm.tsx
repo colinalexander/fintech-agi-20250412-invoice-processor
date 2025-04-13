@@ -15,6 +15,22 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [showConfidenceWarnings, setShowConfidenceWarnings] = useState(true);
+  
+  // Helper function to check if a field has low confidence
+  const hasLowConfidence = (fieldPath: string): boolean => {
+    if (!showConfidenceWarnings) return false;
+    if (!invoiceData.low_confidence_fields) return false;
+    return invoiceData.low_confidence_fields.includes(fieldPath);
+  };
+  
+  // Helper function to get the appropriate style for a field based on confidence
+  const getFieldStyle = (fieldPath: string): string => {
+    if (hasLowConfidence(fieldPath)) {
+      return "mt-1 block w-full rounded-md border-yellow-500 bg-yellow-50 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700";
+    }
+    return "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700";
+  };
 
   // Validation schema
   const validationSchema = Yup.object().shape({
@@ -57,6 +73,51 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
+      {saveSuccess && (
+        <div className="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded flex items-center">
+          <FiAlertTriangle className="mr-2" /> Corrections saved successfully!
+        </div>
+      )}
+
+      {saveError && (
+        <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded flex items-center">
+          <FiAlertTriangle className="mr-2" /> {saveError}
+        </div>
+      )}
+      
+      {invoiceData.low_confidence_fields && invoiceData.low_confidence_fields.length > 0 && showConfidenceWarnings && (
+        <div className="mb-4 p-4 bg-yellow-100 border border-yellow-400 text-yellow-800 rounded">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <FiAlertTriangle className="mr-2 text-yellow-600" /> 
+              <span>
+                <strong>Low confidence fields detected!</strong> The highlighted fields below were extracted with low confidence and may need verification.
+              </span>
+            </div>
+            <button 
+              onClick={() => setShowConfidenceWarnings(false)}
+              className="ml-4 px-2 py-1 text-xs bg-yellow-200 hover:bg-yellow-300 text-yellow-800 rounded"
+            >
+              Hide Warnings
+            </button>
+          </div>
+          <div className="mt-2 text-sm">
+            <p>Fields with low confidence: {invoiceData.low_confidence_fields.length}</p>
+          </div>
+        </div>
+      )}
+      
+      {!showConfidenceWarnings && invoiceData.low_confidence_fields && invoiceData.low_confidence_fields.length > 0 && (
+        <div className="mb-4 flex justify-end">
+          <button 
+            onClick={() => setShowConfidenceWarnings(true)}
+            className="px-3 py-1 text-sm bg-gray-200 hover:bg-gray-300 text-gray-800 rounded flex items-center"
+          >
+            <FiAlertTriangle className="mr-1 text-yellow-600" /> Show Low Confidence Warnings
+          </button>
+        </div>
+      )}
+      
       {invoiceData.flags.confidence_warning && (
         <div className="mb-6 p-3 bg-yellow-50 border border-yellow-200 rounded-md flex items-start">
           <FiAlertTriangle className="text-yellow-500 mt-0.5 mr-2 flex-shrink-0" />
@@ -109,7 +170,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                         type="text"
                         id="invoice_number"
                         value={field.value || ''}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                        className={getFieldStyle('invoice_number')}
                       />
                     )}
                   </Field>
@@ -132,7 +193,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                         type="text"
                         id="invoice_date"
                         value={field.value || ''}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                        className={getFieldStyle('invoice_date')}
                       />
                     )}
                   </Field>
@@ -155,7 +216,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                         type="text"
                         id="due_date"
                         value={field.value || ''}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                        className={getFieldStyle('due_date')}
                       />
                     )}
                   </Field>
@@ -358,7 +419,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                         type="text"
                         id="vendor.name"
                         value={field.value || ''}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                        className={getFieldStyle('vendor.name')}
                       />
                     )}
                   </Field>
@@ -373,7 +434,17 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     name="vendor.tax_id"
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
-                  />
+                  >
+                    {({ field }: any) => (
+                      <input
+                        {...field}
+                        type="text"
+                        id="vendor.tax_id"
+                        value={field.value || ''}
+                        className={getFieldStyle('vendor.tax_id')}
+                      />
+                    )}
+                  </Field>
                 </div>
               </div>
 
@@ -382,12 +453,20 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                   Address
                 </label>
                 <Field
-                  as="textarea"
                   id="vendor.address"
                   name="vendor.address"
-                  rows={2}
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
-                />
+                >
+                  {({ field }: any) => (
+                    <textarea
+                      {...field}
+                      id="vendor.address"
+                      rows={2}
+                      value={field.value || ''}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                    />
+                  )}
+                </Field>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -400,7 +479,17 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     name="vendor.phone"
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
-                  />
+                  >
+                    {({ field }: any) => (
+                      <input
+                        {...field}
+                        type="text"
+                        id="vendor.phone"
+                        value={field.value || ''}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                      />
+                    )}
+                  </Field>
                 </div>
 
                 <div>
@@ -412,7 +501,17 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     name="vendor.email"
                     type="email"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
-                  />
+                  >
+                    {({ field }: any) => (
+                      <input
+                        {...field}
+                        type="email"
+                        id="vendor.email"
+                        value={field.value || ''}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                      />
+                    )}
+                  </Field>
                 </div>
               </div>
             </div>
@@ -431,7 +530,17 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     name="customer.name"
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
-                  />
+                  >
+                    {({ field }: any) => (
+                      <input
+                        {...field}
+                        type="text"
+                        id="customer.name"
+                        value={field.value || ''}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                      />
+                    )}
+                  </Field>
                 </div>
 
                 <div>
@@ -443,7 +552,17 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     name="customer.account_number"
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
-                  />
+                  >
+                    {({ field }: any) => (
+                      <input
+                        {...field}
+                        type="text"
+                        id="customer.account_number"
+                        value={field.value || ''}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                      />
+                    )}
+                  </Field>
                 </div>
               </div>
 
@@ -452,12 +571,20 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                   Address
                 </label>
                 <Field
-                  as="textarea"
                   id="customer.address"
                   name="customer.address"
-                  rows={2}
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
-                />
+                >
+                  {({ field }: any) => (
+                    <textarea
+                      {...field}
+                      id="customer.address"
+                      rows={2}
+                      value={field.value || ''}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                    />
+                  )}
+                </Field>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -470,7 +597,17 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     name="customer.phone"
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
-                  />
+                  >
+                    {({ field }: any) => (
+                      <input
+                        {...field}
+                        type="text"
+                        id="customer.phone"
+                        value={field.value || ''}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                      />
+                    )}
+                  </Field>
                 </div>
 
                 <div>
@@ -482,7 +619,17 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     name="customer.email"
                     type="email"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
-                  />
+                  >
+                    {({ field }: any) => (
+                      <input
+                        {...field}
+                        type="email"
+                        id="customer.email"
+                        value={field.value || ''}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                      />
+                    )}
+                  </Field>
                 </div>
               </div>
             </div>
@@ -531,55 +678,103 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                                 <td className="px-3 py-2">
                                   <Field
                                     name={`line_items.${index}.description`}
-                                    type="text"
                                     className="block w-full text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                                  />
+                                  >
+                                    {({ field }: any) => (
+                                      <input
+                                        {...field}
+                                        type="text"
+                                        value={field.value || ''}
+                                        className={getFieldStyle(`line_items.${index}.description`)}
+                                      />
+                                    )}
+                                  </Field>
                                 </td>
                                 <td className="px-3 py-2">
                                   <Field
                                     name={`line_items.${index}.quantity`}
-                                    type="number"
-                                    step="0.01"
                                     className="block w-full text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                                  />
+                                  >
+                                    {({ field }: any) => (
+                                      <input
+                                        {...field}
+                                        type="number"
+                                        step="0.01"
+                                        value={field.value || ''}
+                                        className={getFieldStyle(`line_items.${index}.quantity`)}
+                                      />
+                                    )}
+                                  </Field>
                                 </td>
                                 <td className="px-3 py-2">
                                   <Field
                                     name={`line_items.${index}.unit_price`}
-                                    type="number"
-                                    step="0.01"
                                     className="block w-full text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                                  />
+                                  >
+                                    {({ field }: any) => (
+                                      <input
+                                        {...field}
+                                        type="number"
+                                        step="0.01"
+                                        value={field.value || ''}
+                                        className={getFieldStyle(`line_items.${index}.unit_price`)}
+                                      />
+                                    )}
+                                  </Field>
                                 </td>
                                 <td className="px-3 py-2">
                                   <Field
                                     name={`line_items.${index}.total_price`}
-                                    type="number"
-                                    step="0.01"
                                     className="block w-full text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                                  />
+                                  >
+                                    {({ field }: any) => (
+                                      <input
+                                        {...field}
+                                        type="number"
+                                        step="0.01"
+                                        value={field.value || ''}
+                                        className={getFieldStyle(`line_items.${index}.total_price`)}
+                                      />
+                                    )}
+                                  </Field>
                                 </td>
                                 <td className="px-3 py-2">
-                                  <Field
-                                    name={`line_items.${index}.product_code`}
-                                    type="text"
-                                    className="block w-full text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                                  />
+                                  <Field name={`line_items.${index}.product_code`}>
+                                    {({ field }: { field: any }) => (
+                                      <input
+                                        {...field}
+                                        type="text"
+                                        id={`line_items.${index}.product_code`}
+                                        value={field.value || ''}
+                                        className={getFieldStyle(`line_items.${index}.product_code`)}
+                                      />
+                                    )}
+                                  </Field>
                                 </td>
                                 <td className="px-3 py-2">
-                                  <Field
-                                    name={`line_items.${index}.tax_rate`}
-                                    type="number"
-                                    step="0.01"
-                                    className="block w-full text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                                  />
+                                  <Field name={`line_items.${index}.tax_rate`}>
+                                    {({ field }: { field: any }) => (
+                                      <input
+                                        {...field}
+                                        type="number"
+                                        id={`line_items.${index}.tax_rate`}
+                                        value={field.value || ''}
+                                        className={getFieldStyle(`line_items.${index}.tax_rate`)}
+                                      />
+                                    )}
+                                  </Field>
                                 </td>
                                 <td className="px-3 py-2">
-                                  <Field
-                                    name={`line_items.${index}.category`}
-                                    type="text"
-                                    className="block w-full text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                                  />
+                                  <Field name={`line_items.${index}.category`}>
+                                    {({ field }: { field: any }) => (
+                                      <input
+                                        {...field}
+                                        type="text"
+                                        value={field.value || ''}
+                                        className={getFieldStyle(`line_items.${index}.category`)}
+                                      />
+                                    )}
+                                  </Field>
                                 </td>
                                 <td className="px-3 py-2">
                                   <button

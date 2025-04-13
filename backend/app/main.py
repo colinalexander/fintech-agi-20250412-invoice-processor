@@ -363,6 +363,78 @@ async def process_invoice_with_ai(file_bytes: bytes, filename: str, file_path: s
 
                 # Validate with Pydantic model
                 print("Validating with Pydantic model")
+                
+                # If low_confidence_fields is not in the data, populate it based on confidence scores
+                if 'low_confidence_fields' not in invoice_data or not invoice_data['low_confidence_fields']:
+                    invoice_data['low_confidence_fields'] = []
+                    # Check top-level fields
+                    for field in ['invoice_number', 'invoice_date', 'due_date', 'purchase_order_number', 
+                                'currency', 'subtotal', 'tax', 'shipping', 'total', 'amount_due']:
+                        confidence_field = f"{field}_confidence"
+                        # Only mark as low confidence if the field has a value (not null) and has low confidence
+                        if field in invoice_data and invoice_data[field] is not None and confidence_field in invoice_data and invoice_data[confidence_field] is not None and invoice_data[confidence_field] < 0.7:
+                            invoice_data['low_confidence_fields'].append(field)
+                    
+                    # Check vendor fields
+                    if 'vendor' in invoice_data:
+                        for field in ['name', 'address', 'phone', 'email', 'tax_id']:
+                            confidence_field = f"{field}_confidence"
+                            # Only mark as low confidence if the field has a value (not null) and has low confidence
+                            if field in invoice_data['vendor'] and invoice_data['vendor'][field] is not None and confidence_field in invoice_data['vendor'] and invoice_data['vendor'][confidence_field] is not None and invoice_data['vendor'][confidence_field] < 0.7:
+                                invoice_data['low_confidence_fields'].append(f"vendor.{field}")
+                    
+                    # Check customer fields
+                    if 'customer' in invoice_data:
+                        for field in ['name', 'address', 'phone', 'email', 'account_number']:
+                            confidence_field = f"{field}_confidence"
+                            # Only mark as low confidence if the field has a value (not null) and has low confidence
+                            if field in invoice_data['customer'] and invoice_data['customer'][field] is not None and confidence_field in invoice_data['customer'] and invoice_data['customer'][confidence_field] is not None and invoice_data['customer'][confidence_field] < 0.7:
+                                invoice_data['low_confidence_fields'].append(f"customer.{field}")
+                    
+                    # Check line items
+                    if 'line_items' in invoice_data:
+                        for i, item in enumerate(invoice_data['line_items']):
+                            for field in ['description', 'quantity', 'unit_price', 'total_price', 'product_code', 'tax_rate', 'category']:
+                                confidence_field = f"{field}_confidence"
+                                # Only mark as low confidence if the field has a value (not null) and has low confidence
+                                if field in item and item[field] is not None and confidence_field in item and item[confidence_field] is not None and item[confidence_field] < 0.7:
+                                    invoice_data['low_confidence_fields'].append(f"line_items.{i}.{field}")
+                
+                # Set confidence warning flag if we have low confidence fields
+                if invoice_data['low_confidence_fields'] and len(invoice_data['low_confidence_fields']) > 0:
+                    if 'flags' not in invoice_data:
+                        invoice_data['flags'] = {}
+                    invoice_data['flags']['confidence_warning'] = True
+                
+                # Check if the total matches the sum of line items, tax, and shipping
+                if 'flags' not in invoice_data:
+                    invoice_data['flags'] = {}
+                
+                # Initialize discrepancy flag to False
+                invoice_data['flags']['discrepancy_detected'] = False
+                
+                # Only validate if we have the necessary fields
+                if ('total' in invoice_data and invoice_data['total'] is not None and 
+                    'line_items' in invoice_data and invoice_data['line_items']):
+                    
+                    # Calculate sum of line item totals
+                    line_item_sum = 0
+                    for item in invoice_data['line_items']:
+                        if 'total_price' in item and item['total_price'] is not None:
+                            line_item_sum += float(item['total_price'])
+                    
+                    # Add tax and shipping if present
+                    if 'tax' in invoice_data and invoice_data['tax'] is not None:
+                        line_item_sum += float(invoice_data['tax'])
+                    if 'shipping' in invoice_data and invoice_data['shipping'] is not None:
+                        line_item_sum += float(invoice_data['shipping'])
+                    
+                    # Compare with total (allow for small rounding differences)
+                    invoice_total = float(invoice_data['total'])
+                    if abs(invoice_total - line_item_sum) > 0.01:
+                        invoice_data['flags']['discrepancy_detected'] = True
+                        print(f"Discrepancy detected: Invoice total {invoice_total} doesn't match calculated total {line_item_sum}")
+                
                 validated_data = InvoiceData(**invoice_data)
                 
                 # Store in memory

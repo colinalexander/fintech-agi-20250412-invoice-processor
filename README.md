@@ -1,7 +1,7 @@
 # 🧠 AI Invoice Parser - Hackathon Prototype
 
 ## ✨ Overview
-A lightweight AI-powered web app that automates the extraction of structured, machine-readable data from PDF invoices. Built as a Ramp-style prototype for the AI x Fintech Build Day hackathon.
+A lightweight AI-powered web app that automates the extraction of structured, machine-readable data from PDF invoices. Built as a Ramp-style prototype for the AI x Fintech Build Day hackathon. Features intelligent confidence scoring and visual highlighting of potentially incorrect data.
 
 ## 🚀 Getting Started
 
@@ -42,12 +42,18 @@ A lightweight AI-powered web app that automates the extraction of structured, ma
 ## 🌟 Features
 - Upload PDF invoices via a simple front-end interface
 - AI-powered extraction of structured data using OpenAI's API
+- Confidence scoring for all extracted fields (0.0-1.0 scale)
+- Visual highlighting of fields with low confidence for easy verification
+- Automatic validation of invoice totals against line items, tax, and shipping
+- Image rotation controls for better document viewing
 - Editable form for reviewing and correcting extracted data
 - Feedback loop to log corrections and improve future performance
 - Mock data for development without an API key
 
 ## 🔑 Unique Selling Points
 - **Zero-OCR dependency**: Works directly with digital PDFs via OpenAI's vision capabilities, eliminating the need for complex OCR setup and maintenance
+- **Confidence-based verification**: Visual highlighting of fields with low confidence scores, focusing human review on potentially problematic data
+- **Automatic validation**: Checks if invoice totals match the sum of line items, tax, and shipping to catch discrepancies
 - **Editable AI output**: Human-in-the-loop feedback loop for correction, continuously improving extraction accuracy over time
 - **Plug-and-play JSON**: Structured output ready for ERP/CRM ingestion with consistent field naming and formatting
 - **Hackathon-optimized**: Fully functional Ramp-style MVP built in under 6 hours, demonstrating rapid development capabilities
@@ -58,17 +64,27 @@ A lightweight AI-powered web app that automates the extraction of structured, ma
 ### 🔹 Front-End (Next.js)
 - PDF Upload component with drag-and-drop functionality
 - Form viewer for extracted data using Formik
+- Visual highlighting system for fields with low confidence scores
+- Image rotation controls for better document viewing
+- Warning banners for low confidence fields and total discrepancies
 - Responsive design with Tailwind CSS
 
 ### 🔹 Back-End (FastAPI)
 - `/api/upload` endpoint for PDF invoice processing
 - Integration with OpenAI's API using the ChatCompletion endpoint
 - PDF text extraction using PyMuPDF
+- Confidence scoring for all extracted fields
+- Automatic validation of invoice totals against line items
 - Structured JSON output following a predefined schema
 - Correction logging endpoint for feedback loop
 
 ### 🔹 Prompt Design
-The prompt is carefully designed to instruct the language model to extract core invoice fields, vendor and customer metadata, line items, and any additional free-form notes. It also guides the model to normalize dates and currency formats, infer categories, and validate numerical consistency.
+The prompt is carefully designed to instruct the language model to extract core invoice fields, vendor and customer metadata, line items, and any additional free-form notes. It also guides the model to:
+- Provide confidence scores (0.0-1.0) for each extracted field
+- Only assign confidence scores to fields with actual values (not null)
+- Normalize dates and currency formats
+- Infer categories and product codes
+- Validate numerical consistency
 
 ## 📁 Project Structure
 ```
