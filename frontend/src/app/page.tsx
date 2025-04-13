@@ -11,13 +11,11 @@ export default function Home() {
   const [currentStep, setCurrentStep] = useState<'upload' | 'form'>('upload');
   const [invoiceData, setInvoiceData] = useState<InvoiceData | null>(null);
   const [invoiceId, setInvoiceId] = useState<string | null>(null);
-  const [filePath, setFilePath] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const handleUploadSuccess = (data: InvoiceData, id: string, path: string) => {
     setInvoiceData(data);
     setInvoiceId(id);
-    setFilePath(path);
     setCurrentStep('form');
     setError(null);
   };
@@ -34,7 +32,6 @@ export default function Home() {
     setCurrentStep('upload');
     setInvoiceData(null);
     setInvoiceId(null);
-    setFilePath(null);
     setError(null);
   };
 
@@ -43,8 +40,14 @@ export default function Home() {
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <FiFileText className="h-8 w-8 text-blue-600" />
-            <h1 className="text-2xl font-bold text-gray-900">AI Invoice Parser</h1>
+            <Image 
+              src="/images/Invoice-AI-Logo.png" 
+              alt="Invoice AI Logo" 
+              width={120} 
+              height={120} 
+              className="h-28 w-auto"
+            />
+            <h1 className="text-2xl font-bold text-gray-900">Invoice Parser</h1>
           </div>
           <div className="text-sm text-gray-500">
             AI x Fintech Build Day Hackathon
@@ -129,18 +132,28 @@ export default function Home() {
                 </div>
                 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {filePath && (
-                    <div className="bg-white p-4 rounded-lg shadow">
-                      <h3 className="text-lg font-medium text-gray-900 mb-4">Original Invoice</h3>
-                      <div className="border border-gray-200 rounded-lg overflow-hidden">
-                        <img 
-                          src={`http://localhost:8080${filePath}`} 
-                          alt="Original Invoice" 
-                          className="w-full h-auto max-h-[800px] object-contain"
-                        />
+                  <div className="bg-white p-4 rounded-lg shadow">
+                    <h3 className="text-lg font-medium text-gray-900 mb-4">Original Invoice</h3>
+                    <div className="border border-gray-200 rounded-lg overflow-hidden">
+                      <div className="flex flex-col items-center justify-center p-8 bg-gray-50 h-[500px]">
+                        {/* File type icon */}
+                        <div className="mb-6">
+                          {invoiceData && (
+                            <div className="w-32 h-32 flex items-center justify-center rounded-full bg-blue-100">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                              </svg>
+                            </div>
+                          )}
+                        </div>
+                        <div className="text-center">
+                          <p className="text-lg font-medium text-gray-800 mb-2">Invoice Processed Successfully</p>
+                          <p className="text-gray-600 mb-4">The data has been extracted and is ready for review</p>
+                          <p className="text-sm text-gray-500">File ID: {invoiceId}</p>
+                        </div>
                       </div>
                     </div>
-                  )}
+                  </div>
                   
                   <InvoiceForm
                     invoiceData={invoiceData}

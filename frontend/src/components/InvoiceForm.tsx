@@ -94,65 +94,65 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                 <h3 className="text-lg font-medium text-gray-900 border-b pb-2">Invoice Details</h3>
                 
                 <div>
-                  <label htmlFor="invoice_number" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="invoice_number" className="block text-sm font-medium text-gray-800">
                     Invoice Number
                   </label>
                   <Field
                     id="invoice_number"
                     name="invoice_number"
                     type="text"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   />
                   <ErrorMessage name="invoice_number" component="div" className="mt-1 text-sm text-red-600" />
                 </div>
 
                 <div>
-                  <label htmlFor="invoice_date" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="invoice_date" className="block text-sm font-medium text-gray-800">
                     Invoice Date (YYYY-MM-DD)
                   </label>
                   <Field
                     id="invoice_date"
                     name="invoice_date"
                     type="text"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   />
                   <ErrorMessage name="invoice_date" component="div" className="mt-1 text-sm text-red-600" />
                 </div>
 
                 <div>
-                  <label htmlFor="due_date" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="due_date" className="block text-sm font-medium text-gray-800">
                     Due Date (YYYY-MM-DD)
                   </label>
                   <Field
                     id="due_date"
                     name="due_date"
                     type="text"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   />
                   <ErrorMessage name="due_date" component="div" className="mt-1 text-sm text-red-600" />
                 </div>
 
                 <div>
-                  <label htmlFor="purchase_order_number" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="purchase_order_number" className="block text-sm font-medium text-gray-800">
                     Purchase Order Number
                   </label>
                   <Field
                     id="purchase_order_number"
                     name="purchase_order_number"
                     type="text"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="currency" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="currency" className="block text-sm font-medium text-gray-800">
                     Currency (ISO code)
                   </label>
                   <Field
                     id="currency"
                     name="currency"
                     type="text"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   />
                 </div>
               </div>
@@ -161,7 +161,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                 <h3 className="text-lg font-medium text-gray-900 border-b pb-2">Amounts</h3>
                 
                 <div>
-                  <label htmlFor="subtotal" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="subtotal" className="block text-sm font-medium text-gray-800">
                     Subtotal
                   </label>
                   <Field
@@ -169,13 +169,13 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     name="subtotal"
                     type="number"
                     step="0.01"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   />
                   <ErrorMessage name="subtotal" component="div" className="mt-1 text-sm text-red-600" />
                 </div>
 
                 <div>
-                  <label htmlFor="tax" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="tax" className="block text-sm font-medium text-gray-800">
                     Tax
                   </label>
                   <Field
@@ -183,13 +183,13 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     name="tax"
                     type="number"
                     step="0.01"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   />
                   <ErrorMessage name="tax" component="div" className="mt-1 text-sm text-red-600" />
                 </div>
 
                 <div>
-                  <label htmlFor="shipping" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="shipping" className="block text-sm font-medium text-gray-800">
                     Shipping
                   </label>
                   <Field
@@ -197,13 +197,13 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     name="shipping"
                     type="number"
                     step="0.01"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   />
                   <ErrorMessage name="shipping" component="div" className="mt-1 text-sm text-red-600" />
                 </div>
 
                 <div>
-                  <label htmlFor="total" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="total" className="block text-sm font-medium text-gray-800">
                     Total
                   </label>
                   <Field
@@ -211,13 +211,13 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     name="total"
                     type="number"
                     step="0.01"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   />
                   <ErrorMessage name="total" component="div" className="mt-1 text-sm text-red-600" />
                 </div>
 
                 <div>
-                  <label htmlFor="amount_due" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="amount_due" className="block text-sm font-medium text-gray-800">
                     Amount Due
                   </label>
                   <Field
@@ -225,7 +225,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     name="amount_due"
                     type="number"
                     step="0.01"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   />
                   <ErrorMessage name="amount_due" component="div" className="mt-1 text-sm text-red-600" />
                 </div>
@@ -238,32 +238,32 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="vendor.name" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="vendor.name" className="block text-sm font-medium text-gray-800">
                     Vendor Name
                   </label>
                   <Field
                     id="vendor.name"
                     name="vendor.name"
                     type="text"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="vendor.tax_id" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="vendor.tax_id" className="block text-sm font-medium text-gray-800">
                     Tax ID
                   </label>
                   <Field
                     id="vendor.tax_id"
                     name="vendor.tax_id"
                     type="text"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   />
                 </div>
               </div>
 
               <div>
-                <label htmlFor="vendor.address" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="vendor.address" className="block text-sm font-medium text-gray-800">
                   Address
                 </label>
                 <Field
@@ -271,32 +271,32 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                   id="vendor.address"
                   name="vendor.address"
                   rows={2}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="vendor.phone" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="vendor.phone" className="block text-sm font-medium text-gray-800">
                     Phone
                   </label>
                   <Field
                     id="vendor.phone"
                     name="vendor.phone"
                     type="text"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="vendor.email" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="vendor.email" className="block text-sm font-medium text-gray-800">
                     Email
                   </label>
                   <Field
                     id="vendor.email"
                     name="vendor.email"
                     type="email"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   />
                 </div>
               </div>
@@ -308,32 +308,32 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="customer.name" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="customer.name" className="block text-sm font-medium text-gray-800">
                     Customer Name
                   </label>
                   <Field
                     id="customer.name"
                     name="customer.name"
                     type="text"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="customer.account_number" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="customer.account_number" className="block text-sm font-medium text-gray-800">
                     Account Number
                   </label>
                   <Field
                     id="customer.account_number"
                     name="customer.account_number"
                     type="text"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   />
                 </div>
               </div>
 
               <div>
-                <label htmlFor="customer.address" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="customer.address" className="block text-sm font-medium text-gray-800">
                   Address
                 </label>
                 <Field
@@ -341,32 +341,32 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                   id="customer.address"
                   name="customer.address"
                   rows={2}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="customer.phone" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="customer.phone" className="block text-sm font-medium text-gray-800">
                     Phone
                   </label>
                   <Field
                     id="customer.phone"
                     name="customer.phone"
                     type="text"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="customer.email" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="customer.email" className="block text-sm font-medium text-gray-800">
                     Email
                   </label>
                   <Field
                     id="customer.email"
                     name="customer.email"
                     type="email"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   />
                 </div>
               </div>
@@ -484,7 +484,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     
                     <button
                       type="button"
-                      className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                       onClick={() => push({
                         description: null,
                         quantity: null,
@@ -508,7 +508,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
               <h3 className="text-lg font-medium text-gray-900 border-b pb-2">Additional Information</h3>
               
               <div>
-                <label htmlFor="additional_information" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="additional_information" className="block text-sm font-medium text-gray-800">
                   Notes, Payment Terms, etc.
                 </label>
                 <Field
@@ -516,7 +516,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                   id="additional_information"
                   name="additional_information"
                   rows={4}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                 />
               </div>
             </div>
@@ -525,7 +525,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
             <div className="flex justify-end space-x-3 pt-5 border-t">
               <button
                 type="button"
-                className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-blue-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 onClick={() => window.print()}
               >
                 <FiFileText className="mr-2 -ml-1" />

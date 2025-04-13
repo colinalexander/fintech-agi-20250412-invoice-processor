@@ -46,6 +46,13 @@ A lightweight AI-powered web app that automates the extraction of structured, ma
 - Feedback loop to log corrections and improve future performance
 - Mock data for development without an API key
 
+## 🔑 Unique Selling Points
+- **Zero-OCR dependency**: Works directly with digital PDFs via OpenAI's vision capabilities, eliminating the need for complex OCR setup and maintenance
+- **Editable AI output**: Human-in-the-loop feedback loop for correction, continuously improving extraction accuracy over time
+- **Plug-and-play JSON**: Structured output ready for ERP/CRM ingestion with consistent field naming and formatting
+- **Hackathon-optimized**: Fully functional Ramp-style MVP built in under 6 hours, demonstrating rapid development capabilities
+- **Multi-format support**: Handles both PDF and image-based invoices (PNG, JPG) with a unified processing pipeline
+
 ## 🛠️ Architecture
 
 ### 🔹 Front-End (Next.js)

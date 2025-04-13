@@ -54,4 +54,5 @@ export interface UploadResponse {
   error?: string;
   invoice_id?: string;
   file_path?: string;
+  file_type?: string;
 }

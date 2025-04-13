@@ -1,3 +1,4 @@
+""" Prompt for invoice parsing."""
 
 INVOICE_PROMPT = """
 You are an accounting and document processing expert trained in analyzing and extracting data from financial documents across a wide variety of formats, layouts, languages, and quality levels.
