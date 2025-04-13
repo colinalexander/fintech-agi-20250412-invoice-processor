@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 
 interface ImageViewerProps {
   imageUrl: string;
@@ -128,9 +129,11 @@ const ImageViewer: React.FC<ImageViewerProps> = ({ imageUrl, alt = 'Invoice imag
           </div>
         )}
         
-        <img
+        <Image
           src={imageUrl}
           alt={alt}
+          width={800}
+          height={1000}
           className="max-h-full max-w-full transition-transform duration-100"
           style={{
             transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
@@ -139,7 +142,8 @@ const ImageViewer: React.FC<ImageViewerProps> = ({ imageUrl, alt = 'Invoice imag
           }}
           onLoad={handleImageLoad}
           onError={handleImageError}
-          draggable="false"
+          unoptimized={true} // Needed for external URLs
+          draggable={false}
         />
       </div>
     </div>

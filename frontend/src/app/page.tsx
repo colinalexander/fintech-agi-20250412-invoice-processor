@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { FiFileText, FiCheckCircle, FiAlertTriangle } from 'react-icons/fi';
+import { FiAlertTriangle } from 'react-icons/fi';
 import FileUpload from '../components/FileUpload';
 import InvoiceForm from '../components/InvoiceForm';
 import { InvoiceData } from '../types/invoice';
@@ -177,7 +177,7 @@ export default function Home() {
                                 }}
                               >
                                 {/* This content shows if the object tag is not supported */}
-                                <p className="p-4 text-center">Your browser doesn't support embedded PDFs.</p>
+                                <p className="p-4 text-center">Your browser doesn&apos;t support embedded PDFs.</p>
                               </object>
                               
                               {/* Fallback iframe approach */}
@@ -427,17 +427,21 @@ export default function Home() {
                               }}
                               style={{ cursor: 'grab' }}
                             >
-                              <img 
+                              <Image 
                                 id="invoice-image"
                                 src={`http://localhost:8081${filePath}`} 
                                 alt="Invoice Image" 
+                                width={800}
+                                height={1000}
                                 className="max-h-full max-w-full object-contain transition-transform duration-100"
                                 style={{ transformOrigin: 'center', transform: 'translate(0px, 0px) scale(1) rotate(0deg)' }}
                                 onError={(e) => {
-                                  e.currentTarget.onerror = null;
+                                  const imgElement = e.currentTarget as HTMLImageElement;
+                                  imgElement.onerror = null;
                                   console.error('Failed to load image');
                                 }}
-                                draggable="false"
+                                draggable={false}
+                                unoptimized={true} // Needed for external URLs
                               />
                             </div>
                           </div>

@@ -135,9 +135,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
           <FiAlertTriangle className="text-red-500 mt-0.5 mr-2 flex-shrink-0" />
           <div>
             <h4 className="font-medium text-red-800">Discrepancy Detected</h4>
-            <p className="text-sm text-red-700">
-              The calculated total doesn't match the sum of line items, tax, and shipping.
-            </p>
+            <p className="text-sm text-red-700">The calculated total doesn&apos;t match the sum of line items, tax, and shipping.</p>
           </div>
         </div>
       )}
@@ -147,7 +145,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ values, errors, touched, isValid }) => (
+        {({ values, isValid }) => (
           <Form className="space-y-8">
             {/* Core Invoice Details */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -164,7 +162,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   >
-                    {({ field }: any) => (
+                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                       <input
                         {...field}
                         type="text"
@@ -187,7 +185,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   >
-                    {({ field }: any) => (
+                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                       <input
                         {...field}
                         type="text"
@@ -210,7 +208,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   >
-                    {({ field }: any) => (
+                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                       <input
                         {...field}
                         type="text"
@@ -233,7 +231,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   >
-                    {({ field }: any) => (
+                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                       <input
                         {...field}
                         type="text"
@@ -255,7 +253,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   >
-                    {({ field }: any) => (
+                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                       <input
                         {...field}
                         type="text"
@@ -282,7 +280,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     step="0.01"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   >
-                    {({ field }: any) => (
+                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                       <input
                         {...field}
                         type="number"
@@ -307,7 +305,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     step="0.01"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   >
-                    {({ field }: any) => (
+                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                       <input
                         {...field}
                         type="number"
@@ -332,7 +330,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     step="0.01"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   >
-                    {({ field }: any) => (
+                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                       <input
                         {...field}
                         type="number"
@@ -357,7 +355,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     step="0.01"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   >
-                    {({ field }: any) => (
+                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                       <input
                         {...field}
                         type="number"
@@ -382,7 +380,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     step="0.01"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   >
-                    {({ field }: any) => (
+                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                       <input
                         {...field}
                         type="number"
@@ -413,7 +411,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   >
-                    {({ field }: any) => (
+                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                       <input
                         {...field}
                         type="text"
@@ -435,7 +433,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   >
-                    {({ field }: any) => (
+                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                       <input
                         {...field}
                         type="text"
@@ -457,7 +455,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                   name="vendor.address"
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                 >
-                  {({ field }: any) => (
+                  {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void; onBlur: (e: React.FocusEvent<HTMLTextAreaElement>) => void } }) => (
                     <textarea
                       {...field}
                       id="vendor.address"
@@ -480,7 +478,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   >
-                    {({ field }: any) => (
+                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                       <input
                         {...field}
                         type="text"
@@ -502,7 +500,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     type="email"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   >
-                    {({ field }: any) => (
+                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                       <input
                         {...field}
                         type="email"
@@ -531,7 +529,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   >
-                    {({ field }: any) => (
+                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                       <input
                         {...field}
                         type="text"
@@ -553,7 +551,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   >
-                    {({ field }: any) => (
+                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                       <input
                         {...field}
                         type="text"
@@ -575,7 +573,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                   name="customer.address"
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                 >
-                  {({ field }: any) => (
+                  {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void; onBlur: (e: React.FocusEvent<HTMLTextAreaElement>) => void } }) => (
                     <textarea
                       {...field}
                       id="customer.address"
@@ -598,7 +596,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   >
-                    {({ field }: any) => (
+                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                       <input
                         {...field}
                         type="text"
@@ -620,7 +618,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                     type="email"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
                   >
-                    {({ field }: any) => (
+                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                       <input
                         {...field}
                         type="email"
@@ -680,7 +678,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                                     name={`line_items.${index}.description`}
                                     className="block w-full text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
                                   >
-                                    {({ field }: any) => (
+                                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                                       <input
                                         {...field}
                                         type="text"
@@ -695,7 +693,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                                     name={`line_items.${index}.quantity`}
                                     className="block w-full text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
                                   >
-                                    {({ field }: any) => (
+                                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                                       <input
                                         {...field}
                                         type="number"
@@ -711,7 +709,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                                     name={`line_items.${index}.unit_price`}
                                     className="block w-full text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
                                   >
-                                    {({ field }: any) => (
+                                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                                       <input
                                         {...field}
                                         type="number"
@@ -727,7 +725,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                                     name={`line_items.${index}.total_price`}
                                     className="block w-full text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
                                   >
-                                    {({ field }: any) => (
+                                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                                       <input
                                         {...field}
                                         type="number"
@@ -740,7 +738,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                                 </td>
                                 <td className="px-3 py-2">
                                   <Field name={`line_items.${index}.product_code`}>
-                                    {({ field }: { field: any }) => (
+                                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                                       <input
                                         {...field}
                                         type="text"
@@ -753,7 +751,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                                 </td>
                                 <td className="px-3 py-2">
                                   <Field name={`line_items.${index}.tax_rate`}>
-                                    {({ field }: { field: any }) => (
+                                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                                       <input
                                         {...field}
                                         type="number"
@@ -766,7 +764,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                                 </td>
                                 <td className="px-3 py-2">
                                   <Field name={`line_items.${index}.category`}>
-                                    {({ field }: { field: any }) => (
+                                    {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; onBlur: (e: React.FocusEvent<HTMLInputElement>) => void } }) => (
                                       <input
                                         {...field}
                                         type="text"
