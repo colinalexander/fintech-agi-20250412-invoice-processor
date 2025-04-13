@@ -42,7 +42,40 @@ This implementation showcases how AI can transform financial document processing
 - Node.js and npm for the frontend
 - OpenAI API key (optional - mock data will be used if not provided)
 
-### Backend Setup
+### Using the Makefile (Recommended)
+
+This project includes a Makefile to simplify common development tasks:
+
+1. Install all dependencies (backend and frontend):
+   ```bash
+   make install
+   ```
+
+2. Start the backend server:
+   ```bash
+   make run-backend
+   ```
+   The server will be available at http://localhost:8081
+
+3. Start the frontend development server (in a separate terminal):
+   ```bash
+   make run-frontend
+   ```
+   The application will be available at http://localhost:3000
+
+4. Run linting checks:
+   ```bash
+   make lint
+   ```
+
+5. Fix lint errors automatically:
+   ```bash
+   make lint-fix
+   ```
+
+### Manual Setup (Alternative)
+
+#### Backend Setup
 1. Navigate to the project directory
 2. Install dependencies using uv (recommended) or pip:
    ```bash
@@ -58,9 +91,9 @@ This implementation showcases how AI can transform financial document processing
    cd backend
    python run.py
    ```
-   The server will be available at http://localhost:8080
+   The server will be available at http://localhost:8081
 
-### Frontend Setup
+#### Frontend Setup
 1. Navigate to the frontend directory
    ```bash
    cd frontend

@@ -819,13 +819,17 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData, invoiceId, onSav
                 <label htmlFor="additional_information" className="block text-sm font-medium text-gray-800">
                   Notes, Payment Terms, etc.
                 </label>
-                <Field
-                  as="textarea"
-                  id="additional_information"
-                  name="additional_information"
-                  rows={4}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
-                />
+                <Field name="additional_information">
+                  {({ field }: { field: { name: string; value: string | null; onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void; onBlur: (e: React.FocusEvent<HTMLTextAreaElement>) => void } }) => (
+                    <textarea
+                      {...field}
+                      id="additional_information"
+                      rows={4}
+                      value={field.value || ''}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-blue-700"
+                    />
+                  )}
+                </Field>
               </div>
             </div>
 
