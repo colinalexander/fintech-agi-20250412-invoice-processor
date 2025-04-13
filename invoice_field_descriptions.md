@@ -1,11 +1,11 @@
 
-# 📄 Invoice Extraction Report: Field Descriptions
+# Invoice Extraction Report: Field Descriptions
 
 This document defines the fields returned by the invoice extraction system. The report is structured in JSON format and captures key invoice data in a standardized way, even across varying layouts, formats, or languages.
 
 ---
 
-## 🧾 Top-Level Fields
+## Top-Level Fields
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -22,7 +22,7 @@ This document defines the fields returned by the invoice extraction system. The 
 
 ---
 
-## 🏢 Vendor Information
+## Vendor Information
 
 Describes the sender of the invoice (the supplier or service provider).
 
@@ -46,7 +46,7 @@ Describes the sender of the invoice (the supplier or service provider).
 
 ---
 
-## 🧑‍💼 Customer Information
+## Customer Information
 
 Describes the recipient of the invoice (the billed party or client).
 
@@ -70,7 +70,7 @@ Describes the recipient of the invoice (the billed party or client).
 
 ---
 
-## 📦 Line Items
+## Line Items
 
 A list of goods or services listed on the invoice.
 
@@ -100,7 +100,7 @@ A list of goods or services listed on the invoice.
 
 ---
 
-## 🗒 Additional Information
+## Additional Information
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -108,7 +108,7 @@ A list of goods or services listed on the invoice.
 
 ---
 
-## 🚩 Flags
+## Flags
 
 A top-level object indicating **issues or special cases** detected during extraction.
 
