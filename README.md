@@ -3,6 +3,10 @@
 ## Overview
 A lightweight AI-powered web app that automates the extraction of structured, machine-readable data from PDF/PNG/JPG invoices. Built as a [Ramp](https://ramp.com/)-style prototype for the [AI x Fintech Build Day hackathon](https://app.agihouse.org/events/ai-fintech-20250412). Features intelligent confidence scoring and visual highlighting of potentially incorrect data.
 
+**Hackathon Task: Financial Document Processing Infrastructure**
+
+*An AI-driven platform automating the extraction, categorization, and integration of financial data—eliminating manual processing, enhancing accuracy, and streamlining financial workflows.*
+
 Let the AI do the paperwork. You focus on the real work!
 
 ## Problem Statement
