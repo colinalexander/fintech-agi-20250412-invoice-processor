@@ -11,11 +11,13 @@ export default function Home() {
   const [currentStep, setCurrentStep] = useState<'upload' | 'form'>('upload');
   const [invoiceData, setInvoiceData] = useState<InvoiceData | null>(null);
   const [invoiceId, setInvoiceId] = useState<string | null>(null);
+  const [filePath, setFilePath] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const handleUploadSuccess = (data: InvoiceData, id: string, path: string) => {
     setInvoiceData(data);
     setInvoiceId(id);
+    setFilePath(path);
     setCurrentStep('form');
     setError(null);
   };
@@ -32,6 +34,7 @@ export default function Home() {
     setCurrentStep('upload');
     setInvoiceData(null);
     setInvoiceId(null);
+    setFilePath(null);
     setError(null);
   };
 
@@ -135,23 +138,74 @@ export default function Home() {
                   <div className="bg-white p-4 rounded-lg shadow">
                     <h3 className="text-lg font-medium text-gray-900 mb-4">Original Invoice</h3>
                     <div className="border border-gray-200 rounded-lg overflow-hidden">
-                      <div className="flex flex-col items-center justify-center p-8 bg-gray-50 h-[500px]">
-                        {/* File type icon */}
-                        <div className="mb-6">
-                          {invoiceData && (
+                      {filePath ? (
+                        <div className="flex flex-col items-center justify-center p-6 bg-gray-50">
+                          {filePath.endsWith('.pdf') ? (
+                            <>
+                              <div className="w-24 h-24 flex items-center justify-center rounded-full bg-blue-100 mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                              </div>
+                              <p className="text-lg font-medium text-gray-800 mb-2">PDF Document Processed</p>
+                              <p className="text-gray-600 mb-4">The invoice data has been successfully extracted</p>
+                              <div className="flex space-x-4">
+                                <a 
+                                  href={`http://localhost:8080${filePath}`} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                                >
+                                  View PDF
+                                </a>
+                                <a 
+                                  href={`http://localhost:8080${filePath}`} 
+                                  download
+                                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
+                                >
+                                  Download
+                                </a>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="w-24 h-24 flex items-center justify-center rounded-full bg-green-100 mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                              </div>
+                              <p className="text-lg font-medium text-gray-800 mb-2">Image Processed</p>
+                              <p className="text-gray-600 mb-4">The invoice data has been successfully extracted</p>
+                              <div className="border border-gray-200 rounded-lg overflow-hidden max-w-md">
+                                <img 
+                                  src={`http://localhost:8080${filePath}`} 
+                                  alt="Invoice" 
+                                  className="max-h-[400px] max-w-full object-contain"
+                                  onError={(e) => {
+                                    e.currentTarget.onerror = null;
+                                    console.error('Failed to load image');
+                                  }}
+                                />
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      ) : (
+                        <div className="flex flex-col items-center justify-center p-8 bg-gray-50 h-[500px]">
+                          <div className="mb-6">
                             <div className="w-32 h-32 flex items-center justify-center rounded-full bg-blue-100">
                               <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                               </svg>
                             </div>
-                          )}
+                          </div>
+                          <div className="text-center">
+                            <p className="text-lg font-medium text-gray-800 mb-2">Invoice Processed Successfully</p>
+                            <p className="text-gray-600 mb-4">The data has been extracted and is ready for review</p>
+                            <p className="text-sm text-gray-500">File ID: {invoiceId}</p>
+                          </div>
                         </div>
-                        <div className="text-center">
-                          <p className="text-lg font-medium text-gray-800 mb-2">Invoice Processed Successfully</p>
-                          <p className="text-gray-600 mb-4">The data has been extracted and is ready for review</p>
-                          <p className="text-sm text-gray-500">File ID: {invoiceId}</p>
-                        </div>
-                      </div>
+                      )}
                     </div>
                   </div>
                   

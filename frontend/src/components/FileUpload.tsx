@@ -44,24 +44,22 @@ const FileUpload: React.FC<FileUploadProps> = ({ onUploadSuccess, onUploadError 
       console.log(`File appended to form data: ${selectedFile.name} (${selectedFile.type}, ${selectedFile.size} bytes)`);
 
       // Simulate progress with detailed status updates
-      const progressSteps = [
-        { progress: 20, status: 'Uploading file to server...' },
-        { progress: 40, status: 'File received, starting processing...' },
-        { progress: 50, status: selectedFile.type.includes('pdf') ? 'Converting PDF to processable format...' : 'Preparing image for analysis...' },
-        { progress: 60, status: 'Extracting text content...' },
-        { progress: 70, status: 'Analyzing invoice structure with AI...' },
-        { progress: 80, status: 'Identifying invoice fields and data...' },
-        { progress: 90, status: 'Formatting extracted data...' }
-      ];
       
-      let stepIndex = 0;
+      // Simulate progress updates while waiting for API
       const progressInterval = setInterval(() => {
-        if (stepIndex < progressSteps.length) {
-          const { progress, status } = progressSteps[stepIndex];
-          setUploadProgress(progress);
-          setProcessingStatus(status);
-          console.log(`Progress update: ${progress}% - ${status}`);
-          stepIndex++;
+        setUploadProgress((prev) => {
+          // Cap at 90% until we get actual completion
+          const newProgress = Math.floor(prev + Math.random() * 5);
+          return newProgress > 90 ? 90 : newProgress;
+        });
+        
+        // Update processing status based on progress
+        if (uploadProgress < 30) {
+          setProcessingStatus('Uploading invoice...');
+        } else if (uploadProgress < 60) {
+          setProcessingStatus('Processing invoice...');
+        } else if (uploadProgress < 90) {
+          setProcessingStatus('Formatting extracted data...');
         } else {
           clearInterval(progressInterval);
         }
@@ -76,8 +74,21 @@ const FileUpload: React.FC<FileUploadProps> = ({ onUploadSuccess, onUploadError 
       if (response.success && response.data && response.invoice_id) {
         setUploadProgress(100);
         setProcessingStatus('Processing complete! Displaying results...');
-        // Pass empty string for file_path to avoid network errors
-        onUploadSuccess(response.data, response.invoice_id, '');
+        
+        // Check if the response contains an error message despite success flag
+        if (response.error) {
+          console.warn('Warning: Response marked as success but contains error:', response.error);
+        }
+        
+        // Check if the invoice data indicates an error condition
+        if (response.data.invoice_number?.startsWith('ERROR-')) {
+          console.warn('Warning: Response contains error data model');
+          onUploadError(response.data.additional_information || 'Error processing invoice');
+          return;
+        }
+        
+        // Pass the file path for display
+        onUploadSuccess(response.data, response.invoice_id, response.file_path || '');
       } else {
         throw new Error(response.error || 'Unknown error occurred');
       }
@@ -93,11 +104,15 @@ const FileUpload: React.FC<FileUploadProps> = ({ onUploadSuccess, onUploadError 
       } else {
         console.error('Unknown error type:', typeof error);
       }
-      onUploadError(error instanceof Error ? error.message : 'Failed to upload invoice');
+      
+      // Show a more user-friendly error message
+      const errorMessage = error instanceof Error 
+        ? error.message 
+        : 'Failed to process invoice. Please try again or contact support.';
+      
+      onUploadError(errorMessage);
     } finally {
-      console.log('Upload process completed (success or failure)');
       setIsUploading(false);
-      setSelectedFile(null);
     }
   };
 
@@ -187,7 +202,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onUploadSuccess, onUploadError 
                 
                 <div className="flex justify-between text-sm">
                   <p className="font-medium text-blue-700">{processingStatus}</p>
-                  <p className="text-gray-600">{uploadProgress}%</p>
+                  <p className="text-gray-600">{Math.floor(uploadProgress)}%</p>
                 </div>
               </div>
             </div>
